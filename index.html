@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kinh Chánh Tinh Tấn</title>
     <link rel="manifest" href="./manifest.json">
     <style>
         :root {
             /* Biến CSS điều chỉnh kích cỡ chữ trong Setting */
-            --main-eng-size: 1.4em;
-            --main-ipa-size: 1.05em;
-            --main-vn-size: 1.1em;
-            --list-eng-size: 1.05em;
-            --list-ipa-size: 0.95em;
+            --main-eng-size: 1.3em;
+            --main-ipa-size: 1.0em;
+            --main-vn-size: 1.05em;
+            --list-eng-size: 1.0em;
+            --list-ipa-size: 0.9em;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 1px;
-            background-color: #f5f5f5;
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
+
+        html, body {
+            font-family: Arial, sans-serif;
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Tự động thu phóng tỷ lệ chữ cơ sở theo độ rộng màn hình điện thoại */
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+        }
+
         .container {
             background-color: white;
             padding: 8px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             width: 100%;
-            box-sizing: border-box;
+            max-width: 100%;
+            overflow-x: hidden;
         }
+
         .header-bar {
             display: flex;
             justify-content: space-between;
@@ -38,41 +54,61 @@
             padding: 0 4px;
             flex-wrap: wrap;
             gap: 8px;
+            width: 100%;
         }
+
+        #appTitle {
+            color: #2c3e50;
+            margin: 6px 0;
+            font-size: clamp(1.05rem, 4.2vw, 1.4rem);
+            line-height: 1.3;
+            flex: 1;
+            min-width: 0;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
         .btn-toggle-local {
             background-color: #e9ecef;
             color: #333;
             border: 1px solid #ced4da;
-            padding: 6px 12px;
+            padding: 6px 10px;
             font-size: 0.85em;
             border-radius: 4px;
             cursor: pointer;
             min-width: unset !important;
             flex: none !important;
-            display: none; /* Chỉ hiện khi phát hiện PC */
+            display: none;
+            white-space: nowrap;
         }
         .btn-toggle-local:hover { background-color: #dde2e6; }
 
-        /* --- KHUNG CHỌN BÀI NGHE (MP3 + SRT CÙNG TÊN) --- */
+        /* --- KHUNG CHỌN BÀI NGHE (CHỐNG TRÀN VIỀN KHI TÊN FILE DÀI) --- */
         .playlist-bar {
             display: flex;
             align-items: center;
             gap: 8px;
             background: #eef6ff;
             border: 1px solid #b8daff;
-            padding: 8px 12px;
+            padding: 8px 10px;
             border-radius: 6px;
             margin: 8px 0 12px 0;
+            width: 100%;
+            max-width: 100%;
         }
         .playlist-bar label {
             font-weight: bold;
             color: #004085;
             font-size: 0.95em;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .playlist-select {
             flex: 1;
-            padding: 7px 10px;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+            padding: 7px 8px;
             font-size: 0.95em;
             font-weight: bold;
             color: #2c3e50;
@@ -81,6 +117,9 @@
             background-color: #fff;
             outline: none;
             cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         /* --- TRÌNH PHÁT NHẠC & THANH TỐC ĐỘ / TẢI XUỐNG SỔ XUỐNG DƯỚI --- */
@@ -88,11 +127,13 @@
             background: #f8f9fa;
             border: 1px solid #dee2e6;
             border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 15px;
+            padding: 8px;
+            margin-bottom: 12px;
+            width: 100%;
         }
         audio {
             width: 100%;
+            max-width: 100%;
             margin-bottom: 8px;
             outline: none;
             display: block;
@@ -100,9 +141,10 @@
         .custom-media-bar {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            gap: 10px;
+            justify-content: space-between;
+            gap: 8px;
             flex-wrap: wrap;
+            width: 100%;
         }
         .speed-dropdown-wrapper {
             position: relative;
@@ -112,28 +154,28 @@
             background-color: #fff !important;
             color: #2c3e50 !important;
             border: 1px solid #ced4da !important;
-            padding: 6px 12px !important;
-            font-size: 0.9em !important;
+            padding: 6px 10px !important;
+            font-size: 0.88em !important;
             border-radius: 5px !important;
             cursor: pointer;
             min-width: unset !important;
             flex: none !important;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             text-decoration: none;
             font-weight: bold;
+            white-space: nowrap;
         }
         .btn-media-tool:hover {
             background-color: #e9ecef !important;
         }
-        /* Menu tốc độ luôn sổ xuống dưới (top: calc(100% + 4px)) để không bị khuất */
         .speed-menu-list {
             display: none;
             position: absolute;
             top: calc(100% + 4px);
             left: 0;
-            min-width: 140px;
+            min-width: 145px;
             background: #fff;
             border: 1px solid #ced4da;
             border-radius: 6px;
@@ -166,8 +208,8 @@
         .subtitle-display {
             text-align: center;
             min-height: 4.5em;
-            margin: 15px 0;
-            padding: 15px 12px;
+            margin: 12px 0;
+            padding: 14px 10px;
             background-color: #2c3e50;
             color: #ecf0f1;
             border-radius: 8px;
@@ -177,11 +219,15 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
+            width: 100%;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
         .subtitle-eng {
             font-size: var(--main-eng-size);
             line-height: 1.35;
             font-weight: bold;
+            width: 100%;
         }
         .subtitle-ipa {
             font-size: var(--main-ipa-size);
@@ -189,45 +235,51 @@
             color: #82e0aa;
             font-family: "Lucida Sans Unicode", "Segoe UI", Arial, sans-serif;
             font-weight: normal;
+            width: 100%;
         }
         .subtitle-vn {
             font-size: var(--main-vn-size);
             line-height: 1.35;
             color: #ecf0f1;
             font-weight: normal;
+            width: 100%;
         }
 
         .settings-panel {
             background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
             border: 1px solid #dee2e6;
+            width: 100%;
         }
-        .settings-panel h3 { margin-top: 0; margin-bottom: 15px; color: #333; }
+        .settings-panel h3 { margin-top: 0; margin-bottom: 12px; color: #333; font-size: 1.05em; }
         
         /* --- KHUNG DANH SÁCH CHỌN CÂU --- */
         .sentences-list {
             max-height: 450px;
             overflow-y: auto;
+            overflow-x: hidden;
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 8px;
             border-radius: 4px;
             background: #fff;
+            width: 100%;
         }
         .sentence-item {
             padding: 8px 4px;
             cursor: pointer;
             border-bottom: 1px solid #eee;
             transition: background 0.2s;
-            line-height: 1.5;
+            line-height: 1.45;
             display: flex;
             align-items: flex-start;
+            width: 100%;
         }
         .sentence-item:hover { background-color: #f0f0f0; }
         
         .sentence-item.current {
-            border-left: 5px solid #007bff;
+            border-left: 4px solid #007bff;
             font-weight: bold;
             background-color: #e3f2fd;
         }
@@ -235,10 +287,11 @@
         .sentence-item.selected.current { background-color: #ffe8a1; }
 
         .sentence-checkbox {
-            margin-right: 5px;
+            margin-right: 6px;
             margin-top: 4px;
-            transform: scale(1.3);
+            transform: scale(1.25);
             cursor: pointer;
+            flex-shrink: 0;
         }
         .sentence-number {
             font-weight: bold;
@@ -246,11 +299,14 @@
             margin-right: 4px;
             min-width: 22px;
             font-size: var(--list-eng-size);
+            flex-shrink: 0;
         }
         .sentence-text {
             flex: 1;
-            text-align: justify;
-            text-justify: inter-word;
+            min-width: 0;
+            text-align: left;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
         .sentence-eng-line {
             font-size: var(--list-eng-size);
@@ -261,17 +317,15 @@
             font-family: "Lucida Sans Unicode", "Segoe UI", Arial, sans-serif;
             font-weight: normal;
             margin-top: 2px;
-            text-align: justify;
-            text-justify: inter-word;
         }
         .time-badge {
             color: #888;
-            font-size: 0.85em;
+            font-size: 0.82em;
             font-family: monospace;
             background: #eee;
             padding: 2px 6px;
             border-radius: 4px;
-            margin-top: 5px;
+            margin-top: 4px;
             display: inline-block;
             font-weight: normal;
         }
@@ -280,16 +334,17 @@
         .local-fallback {
             background-color: #fff3cd;
             border-left: 4px solid #ffc107;
-            padding: 15px;
-            margin-bottom: 15px;
-            font-size: 0.95em;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 0.92em;
             border-radius: 4px;
             display: none;
+            width: 100%;
         }
         .local-folder-box {
             background: #fff;
             border: 2px dashed #007bff;
-            padding: 12px;
+            padding: 10px;
             border-radius: 6px;
             margin-top: 8px;
             text-align: center;
@@ -297,55 +352,65 @@
         .btn-folder-load {
             background-color: #28a745 !important;
             color: white;
-            padding: 10px 16px;
+            padding: 9px 14px;
             border-radius: 5px;
             cursor: pointer;
             display: inline-block;
             font-weight: bold;
             margin-bottom: 6px;
+            max-width: 100%;
         }
         .btn-folder-load:hover { background-color: #218838 !important; }
-        .local-status { font-size: 0.9em; color: #155724; margin-top: 6px; font-weight: bold; }
+        .local-status { font-size: 0.9em; color: #155724; margin-top: 6px; font-weight: bold; word-break: break-word; }
 
-        .controls { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
         button {
-            padding: 12px 20px;
+            padding: 11px 14px;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1em;
+            font-size: 0.98em;
             transition: background 0.2s;
-            flex: 1;
-            min-width: 200px;
+            flex: 1 1 140px;
+            max-width: 100%;
         }
         button:hover { background-color: #0056b3; }
         button.active { background-color: #dc3545 !important; }
-        .btn-secondary { background-color: #6c757d; flex: none; }
+        .btn-secondary { background-color: #6c757d; flex: 0 1 auto; }
         .btn-secondary:hover { background-color: #5a6268; }
 
-        /* --- NÚT FLOAT ICON HOA SEN --- */
+        /* --- NÚT FLOAT ICON HOA SEN CỐ ĐỊNH GÓC PHẢI DƯỚI MÀN HÌNH --- */
         .fab-doc-btn {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            width: 48px;
-            height: 48px;
+            position: fixed !important;
+            bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+            right: 14px !important;
+            left: auto !important;
+            width: 50px !important;
+            height: 50px !important;
             min-width: unset !important;
+            flex: none !important;
             padding: 0 !important;
-            border-radius: 50%;
+            border-radius: 50% !important;
             background-color: #007bff;
             color: #fff;
             border: 2px solid #fff;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 9999;
+            z-index: 99999;
             transition: transform 0.15s, background-color 0.2s;
+            touch-action: manipulation;
         }
         .fab-doc-btn:active { transform: scale(0.92); }
         .fab-doc-btn svg { width: 28px; height: 28px; }
@@ -357,15 +422,14 @@
             color: white;
             font-size: 11px;
             font-weight: bold;
-            min-width: 18px;
-            height: 18px;
+            min-width: 19px;
+            height: 19px;
             padding: 0 4px;
-            border-radius: 9px;
+            border-radius: 10px;
             display: none;
             align-items: center;
             justify-content: center;
             box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            box-sizing: border-box;
         }
 
         /* --- MODAL ĐA NĂNG: CHỌN SỐ CÂU & SETTING --- */
@@ -373,12 +437,11 @@
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.55);
-            z-index: 10000;
+            z-index: 100000;
             display: none;
             align-items: flex-start;
             justify-content: center;
-            padding: 15px 10px;
-            box-sizing: border-box;
+            padding: 12px 8px;
             overflow-y: auto;
         }
         .range-modal {
@@ -388,13 +451,12 @@
             border-radius: 10px;
             padding: 14px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            box-sizing: border-box;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         .modal-mode-tabs {
             display: flex;
             gap: 6px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             border-bottom: 2px solid #dee2e6;
             padding-bottom: 8px;
         }
@@ -417,20 +479,20 @@
         .range-modal h4 {
             margin: 0 0 8px 0;
             color: #2c3e50;
-            font-size: 1.05em;
+            font-size: 1.02em;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
         .range-modal p { margin: 0 0 10px 0; font-size: 0.88em; color: #555; line-height: 1.4; }
         .range-input-box {
             width: 100%;
-            padding: 10px 12px;
-            font-size: 1.25em;
+            padding: 10px;
+            font-size: 1.2em;
             font-weight: bold;
             border: 2px solid #007bff;
             border-radius: 6px;
-            box-sizing: border-box;
             outline: none;
             text-align: center;
             letter-spacing: 1px;
@@ -441,29 +503,29 @@
             flex: 1;
             min-width: unset !important;
             padding: 8px 4px !important;
-            font-size: 0.95em !important;
+            font-size: 0.9em !important;
             background-color: #e9ecef !important;
             color: #2c3e50 !important;
             border: 1px solid #ced4da !important;
             border-radius: 5px !important;
         }
         .range-modal-actions { display: flex; gap: 8px; margin-top: 10px; }
-        .range-modal-actions button { min-width: unset !important; padding: 10px 8px !important; font-size: 0.95em !important; }
+        .range-modal-actions button { min-width: unset !important; padding: 10px 8px !important; font-size: 0.92em !important; flex: 1; }
         .btn-apply-loop { background-color: #28a745 !important; }
         .btn-close-modal { background-color: #6c757d !important; flex: 0.6 !important; }
 
-        /* --- GIAO DIỆN CHỈNH CỠ CHỮ TRONG SETTING --- */
+        /* --- GIAO DIỆN CHỈNH CỠ CHỮ TRONG SETTING KÈM NÚT - / + --- */
         .setting-group {
             background: #f8f9fa;
             border: 1px solid #e2e6ea;
             border-radius: 8px;
-            padding: 10px 12px;
+            padding: 10px;
             margin-bottom: 10px;
         }
         .setting-group-title {
             font-weight: bold;
             color: #2c3e50;
-            font-size: 0.95em;
+            font-size: 0.92em;
             margin-bottom: 8px;
             border-bottom: 1px solid #dee2e6;
             padding-bottom: 4px;
@@ -473,23 +535,51 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 8px;
-            gap: 8px;
+            gap: 6px;
         }
         .setting-row:last-child { margin-bottom: 0; }
         .setting-label {
-            font-size: 0.88em;
+            font-size: 0.86em;
             color: #333;
             flex: 1;
+            min-width: 75px;
+        }
+        .setting-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-step-font {
+            width: 30px !important;
+            height: 30px !important;
+            min-width: 30px !important;
+            flex: none !important;
+            padding: 0 !important;
+            font-size: 1.15em !important;
+            line-height: 1 !important;
+            border-radius: 5px !important;
+            background-color: #e9ecef !important;
+            color: #2c3e50 !important;
+            border: 1px solid #ced4da !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+        }
+        .btn-step-font:active {
+            background-color: #007bff !important;
+            color: #fff !important;
         }
         .setting-slider {
-            width: 110px;
+            width: 85px;
             cursor: pointer;
+            margin: 0;
         }
         .setting-val {
-            font-size: 0.85em;
+            font-size: 0.82em;
             font-weight: bold;
             color: #007bff;
-            min-width: 42px;
+            min-width: 40px;
             text-align: right;
         }
     </style>
@@ -497,7 +587,7 @@
 <body>
     <div class="container">
         <div class="header-bar">
-            <h2 id="appTitle" style="color: #2c3e50; margin: 8px 0;">Kinh Chánh Tinh Tấn</h2>
+            <h2 id="appTitle">Kinh Chánh Tinh Tấn</h2>
             <button type="button" class="btn-toggle-local" id="btnToggleLocal" onclick="toggleLocalPanel()" title="Bật/tắt khung nạp thư mục trên PC">📂 Nạp Thư Mục PC</button>
         </div>
 
@@ -518,7 +608,7 @@
 
         <!-- Thanh chọn bài nghe (khi có nhiều cặp file MP3 và SRT cùng tên) -->
         <div class="playlist-bar">
-            <label for="trackSelector">🎵 Chọn bài:</label>
+            <label for="trackSelector">🎵 Bài:</label>
             <select id="trackSelector" class="playlist-select" onchange="handleTrackChange(this.value)">
                 <option value="">-- Đang tải danh sách bài... --</option>
             </select>
@@ -532,7 +622,7 @@
             <div class="custom-media-bar">
                 <div class="speed-dropdown-wrapper">
                     <button type="button" class="btn-media-tool" id="btnSpeedToggle" onclick="toggleSpeedMenu(event)">
-                        ⚡ Tốc độ: <span id="currentSpeedText">1.0x</span> ▼
+                        Tốc độ: <span id="currentSpeedText">1.0x</span> ▼
                     </button>
                     <div class="speed-menu-list" id="speedMenuList">
                         <div class="speed-option" onclick="setPlaybackSpeed(0.5)"><span>0.5x (Rất chậm)</span></div>
@@ -544,7 +634,7 @@
                     </div>
                 </div>
                 <a id="btnDownloadMp3" href="audio.mp3" download="audio.mp3" class="btn-media-tool">
-                    ⬇️ Tải MP3 xuống
+                    Tải MP3
                 </a>
             </div>
         </div>
@@ -558,14 +648,14 @@
 
         <div class="settings-panel">
             <h3>🔄 1. Lặp đoạn AB tự do</h3>
-            <button id="btnAB" onclick="handleABClick()">
+            <button id="btnAB" onclick="handleABClick()" style="width: 100%;">
                 [ A-B ] Bấm vào đây để đặt mốc A
             </button>
         </div>
 
         <div class="settings-panel">
             <h3>📑 2. Lặp Danh Sách Câu </h3>
-            <p style="margin-top:0; color:#555; font-size:0.95em;">Tích chọn một hoặc nhiều câu bên dưới. Hệ thống sẽ liên tục lặp lại các câu bạn đã chọn.</p>
+            <p style="margin-top:0; color:#555; font-size:0.92em;">Tích chọn một hoặc nhiều câu bên dưới. Hệ thống sẽ liên tục lặp lại các câu bạn đã chọn.</p>
             <div class="controls">
                 <button id="btnToggleLoop" onclick="toggleSentenceLoop()">🔄 Bắt đầu lặp</button>
                 <button class="btn-secondary" onclick="clearSelection()">Xóa tất cả</button>
@@ -575,7 +665,7 @@
         </div>
     </div>
 
-    <!-- Nút Float Icon Hoa Sen (Mở Chọn số câu & Setting) -->
+    <!-- Nút Float Icon Hoa Sen (Luôn ghim góc phải dưới màn hình) -->
     <button class="fab-doc-btn" id="fabQuickSelect" onclick="openRangeModal()" title="Chọn câu & Cài đặt cỡ chữ">
         <span class="fab-badge" id="fabBadge">0</span>
         <svg viewBox="0 0 512 512">
@@ -590,7 +680,6 @@
     <!-- Hộp thoại 2 chức năng: Chọn số câu & Setting -->
     <div class="range-modal-overlay" id="rangeModalOverlay" onclick="handleOverlayClick(event)">
         <div class="range-modal">
-            <!-- Thanh chuyển đổi 2 lựa chọn -->
             <div class="modal-mode-tabs">
                 <button type="button" class="modal-tab-btn active-tab" id="tabBtnRange" onclick="switchModalTab('range')">
                     📄 Chọn số câu
@@ -600,7 +689,7 @@
                 </button>
             </div>
 
-            <!-- TAB 1: CHỌN SỐ CÂU (NHƯ CŨ) -->
+            <!-- TAB 1: CHỌN SỐ CÂU -->
             <div id="modalSectionRange">
                 <h4>
                     <span>📄 Chọn nhanh câu theo số</span>
@@ -623,43 +712,63 @@
                 </div>
             </div>
 
-            <!-- TAB 2: SETTING (CHỈNH KÍCH CỠ CHỮ) -->
+            <!-- TAB 2: SETTING (CHỈNH KÍCH CỠ CHỮ KÈM NÚT - VÀ +) -->
             <div id="modalSectionSetting" style="display: none;">
                 <div class="setting-group">
                     <div class="setting-group-title">📺 Khung phụ đề chính (Khi chạy MP3)</div>
                     <div class="setting-row">
-                        <span class="setting-label">Câu Tiếng Anh:</span>
-                        <input type="range" class="setting-slider" id="sliderMainEng" min="0.8" max="2.5" step="0.05" oninput="updateFontSizeSetting()">
-                        <span class="setting-val" id="valMainEng">1.40em</span>
+                        <span class="setting-label">Tiếng Anh:</span>
+                        <div class="setting-controls">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderMainEng', -0.05)">-</button>
+                            <input type="range" class="setting-slider" id="sliderMainEng" min="0.8" max="2.5" step="0.05" oninput="updateFontSizeSetting()">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderMainEng', 0.05)">+</button>
+                            <span class="setting-val" id="valMainEng">1.30em</span>
+                        </div>
                     </div>
                     <div class="setting-row">
                         <span class="setting-label">Phiên âm IPA:</span>
-                        <input type="range" class="setting-slider" id="sliderMainIpa" min="0.7" max="2.2" step="0.05" oninput="updateFontSizeSetting()">
-                        <span class="setting-val" id="valMainIpa">1.05em</span>
+                        <div class="setting-controls">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderMainIpa', -0.05)">-</button>
+                            <input type="range" class="setting-slider" id="sliderMainIpa" min="0.7" max="2.2" step="0.05" oninput="updateFontSizeSetting()">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderMainIpa', 0.05)">+</button>
+                            <span class="setting-val" id="valMainIpa">1.00em</span>
+                        </div>
                     </div>
                     <div class="setting-row">
                         <span class="setting-label">Tiếng Việt:</span>
-                        <input type="range" class="setting-slider" id="sliderMainVn" min="0.7" max="2.2" step="0.05" oninput="updateFontSizeSetting()">
-                        <span class="setting-val" id="valMainVn">1.10em</span>
+                        <div class="setting-controls">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderMainVn', -0.05)">-</button>
+                            <input type="range" class="setting-slider" id="sliderMainVn" min="0.7" max="2.2" step="0.05" oninput="updateFontSizeSetting()">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderMainVn', 0.05)">+</button>
+                            <span class="setting-val" id="valMainVn">1.05em</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="setting-group">
                     <div class="setting-group-title">📑 Khung danh sách chọn câu</div>
                     <div class="setting-row">
-                        <span class="setting-label">Câu Tiếng Anh:</span>
-                        <input type="range" class="setting-slider" id="sliderListEng" min="0.8" max="2.0" step="0.05" oninput="updateFontSizeSetting()">
-                        <span class="setting-val" id="valListEng">1.05em</span>
+                        <span class="setting-label">Tiếng Anh:</span>
+                        <div class="setting-controls">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderListEng', -0.05)">-</button>
+                            <input type="range" class="setting-slider" id="sliderListEng" min="0.75" max="2.0" step="0.05" oninput="updateFontSizeSetting()">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderListEng', 0.05)">+</button>
+                            <span class="setting-val" id="valListEng">1.00em</span>
+                        </div>
                     </div>
                     <div class="setting-row">
                         <span class="setting-label">Phiên âm IPA:</span>
-                        <input type="range" class="setting-slider" id="sliderListIpa" min="0.7" max="1.8" step="0.05" oninput="updateFontSizeSetting()">
-                        <span class="setting-val" id="valListIpa">0.95em</span>
+                        <div class="setting-controls">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderListIpa', -0.05)">-</button>
+                            <input type="range" class="setting-slider" id="sliderListIpa" min="0.65" max="1.8" step="0.05" oninput="updateFontSizeSetting()">
+                            <button type="button" class="btn-step-font" onclick="stepFontSize('sliderListIpa', 0.05)">+</button>
+                            <span class="setting-val" id="valListIpa">0.90em</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="range-modal-actions">
-                    <button type="button" class="btn-secondary" onclick="resetFontSizeSettings()">↺ Mặc định</button>
+                    <button type="button" class="btn-secondary" onclick="autoFitFontForDevice()">📱 Tự vừa màn hình</button>
                     <button type="button" class="btn-apply-loop" onclick="closeRangeModal()">✅ Xong</button>
                 </div>
             </div>
@@ -682,9 +791,7 @@
         const fabBadge = document.getElementById('fabBadge');
         const totalSentenceHint = document.getElementById('totalSentenceHint');
         
-        // Từ điển IPA dùng chung cho toàn bộ các file MP3
         const ipaDict = {};
-        // Danh sách các cặp bài nghe { id, title, mp3Url, srtUrl, srtText, mp3Name }
         let availableTracks = [];
         let sentences = [];
         let currentSentenceIndex = -1;
@@ -696,7 +803,6 @@
         function isRunningOnPC() {
             const ua = navigator.userAgent || "";
             const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-            // iPadOS đôi khi báo Macintosh nhưng có touch điểm lớn
             const isIPadTouch = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
             return (!isMobileUA && !isIPadTouch) || window.location.protocol === 'file:';
         }
@@ -726,22 +832,26 @@
             if (menu) menu.classList.remove('show');
         });
 
-        // --- 3. QUẢN LÝ SETTING CỠ CHỮ (LƯU LOCALSTORAGE) ---
-        const DEFAULT_FONT_SIZES = {
-            mainEng: 1.40,
-            mainIpa: 1.05,
-            mainVn: 1.10,
-            listEng: 1.05,
-            listIpa: 0.95
-        };
+        // --- 3. QUẢN LÝ SETTING CỠ CHỮ (TỰ ĐỘNG THEO MÀN HÌNH + NÚT +/-) ---
+        function getDeviceDefaultFontSizes() {
+            const w = window.innerWidth || 375;
+            if (w <= 420) {
+                // Cỡ chữ tối ưu cho màn hình điện thoại nhỏ/vừa không bị tràn
+                return { mainEng: 1.15, mainIpa: 0.92, mainVn: 0.98, listEng: 0.95, listIpa: 0.85 };
+            } else if (w <= 768) {
+                return { mainEng: 1.25, mainIpa: 1.00, mainVn: 1.05, listEng: 1.00, listIpa: 0.90 };
+            }
+            return { mainEng: 1.40, mainIpa: 1.05, mainVn: 1.10, listEng: 1.05, listIpa: 0.95 };
+        }
 
         function loadSavedFontSizeSettings() {
-            let saved = {};
+            let saved = null;
             try {
-                saved = JSON.parse(localStorage.getItem('kinh_font_settings') || '{}');
+                const raw = localStorage.getItem('kinh_font_settings');
+                if (raw) saved = JSON.parse(raw);
             } catch (e) {}
 
-            const cfg = { ...DEFAULT_FONT_SIZES, ...saved };
+            const cfg = saved ? { ...getDeviceDefaultFontSizes(), ...saved } : getDeviceDefaultFontSizes();
             document.getElementById('sliderMainEng').value = cfg.mainEng;
             document.getElementById('sliderMainIpa').value = cfg.mainIpa;
             document.getElementById('sliderMainVn').value = cfg.mainVn;
@@ -765,6 +875,18 @@
             document.getElementById('valListIpa').innerText = Number(cfg.listIpa).toFixed(2) + 'em';
         }
 
+        function stepFontSize(sliderId, delta) {
+            const slider = document.getElementById(sliderId);
+            if (!slider) return;
+            const min = parseFloat(slider.min);
+            const max = parseFloat(slider.max);
+            let val = parseFloat(slider.value) + delta;
+            val = Math.round(val * 100) / 100;
+            val = Math.max(min, Math.min(max, val));
+            slider.value = val;
+            updateFontSizeSetting();
+        }
+
         function updateFontSizeSetting() {
             const cfg = {
                 mainEng: parseFloat(document.getElementById('sliderMainEng').value),
@@ -779,7 +901,7 @@
             } catch (e) {}
         }
 
-        function resetFontSizeSettings() {
+        function autoFitFontForDevice() {
             try { localStorage.removeItem('kinh_font_settings'); } catch (e) {}
             loadSavedFontSizeSettings();
         }
@@ -795,7 +917,7 @@
             }
         }
 
-        // --- 4. XỬ LÝ TỪ ĐIỂN IPA DÙNG CHUNG ---
+        // --- 4. XỬ LÝ TỪ ĐIỂN IPA & HIỂN THỊ PHỤ ĐỀ (HỖ TRỢ CẢ SRT KHÔNG CÓ TIẾNG VIỆT) ---
         function convertSentenceToIPA(text) {
             if (!text) return "";
             return text.replace(/[a-zA-Z]+/g, (word) => {
@@ -823,13 +945,31 @@
 
         function updateMainSubtitle(engText, ipaText, vnText) {
             mainSubEng.innerHTML = engText || "";
-            mainSubIpa.innerText = ipaText ? `/${ipaText}/` : "";
-            mainSubVn.innerText = vnText || "";
+            if (ipaText) {
+                mainSubIpa.innerText = `/${ipaText}/`;
+                mainSubIpa.style.display = 'block';
+            } else {
+                mainSubIpa.innerText = "";
+                mainSubIpa.style.display = 'none';
+            }
+            // Nếu file SRT không có phần tiếng Việt, ẩn dòng tiếng Việt để giao diện gọn đẹp
+            if (vnText && vnText.trim().length > 0) {
+                mainSubVn.innerText = vnText.trim();
+                mainSubVn.style.display = 'block';
+            } else {
+                mainSubVn.innerText = "";
+                mainSubVn.style.display = 'none';
+            }
         }
 
         // --- 5. QUẢN LÝ NHIỀU CẶP FILE MP3 & SRT CÙNG TÊN ---
         function getBaseName(filename) {
             return filename.replace(/\.[^/.]+$/, "").trim();
+        }
+
+        function formatDisplayTitle(rawTitle) {
+            // Thay dấu gạch dưới liên tiếp bằng khoảng trắng để dễ đọc và không gây tràn viền
+            return (rawTitle || "").replace(/_/g, ' ');
         }
 
         function renderTrackSelector() {
@@ -844,7 +984,7 @@
             availableTracks.forEach((t, idx) => {
                 const opt = document.createElement('option');
                 opt.value = idx;
-                opt.innerText = `${idx + 1}. ${t.title}`;
+                opt.innerText = `${idx + 1}. ${formatDisplayTitle(t.title)}`;
                 trackSelector.appendChild(opt);
             });
         }
@@ -854,31 +994,29 @@
             if (isNaN(idx) || !availableTracks[idx]) return;
             const track = availableTracks[idx];
 
-            // Dừng chế độ lặp cũ khi đổi bài
             resetAB();
             stopSentenceLoop();
             currentSentenceIndex = -1;
 
-            document.getElementById('appTitle').innerText = track.title;
+            const niceTitle = formatDisplayTitle(track.title);
+            document.getElementById('appTitle').innerText = niceTitle;
 
-            // Gán audio và cập nhật nút tải xuống
             const currentRate = media.playbackRate || 1.0;
             media.src = track.mp3Url;
             media.playbackRate = currentRate;
             btnDownloadMp3.href = track.mp3Url;
             btnDownloadMp3.setAttribute('download', track.mp3Name || (track.title + '.mp3'));
 
-            // Nạp phụ đề SRT tương ứng
             if (track.srtText) {
                 processSRT(track.srtText);
-                updateMainSubtitle(`Đã chọn: ${track.title}<br>Bấm Play hoặc chọn câu bên dưới để nghe.`, "", "");
+                updateMainSubtitle(`Đã chọn: ${niceTitle}<br>Bấm Play hoặc chọn câu bên dưới để nghe.`, "", "");
             } else if (track.srtUrl) {
                 try {
                     const res = await fetch(track.srtUrl, { cache: 'no-cache' });
                     if (res.ok) {
                         track.srtText = await res.text();
                         processSRT(track.srtText);
-                        updateMainSubtitle(`Đã chọn: ${track.title}<br>Bấm Play hoặc chọn câu bên dưới để nghe.`, "", "");
+                        updateMainSubtitle(`Đã chọn: ${niceTitle}<br>Bấm Play hoặc chọn câu bên dưới để nghe.`, "", "");
                     }
                 } catch (e) {
                     updateMainSubtitle("Không tải được file phụ đề SRT của bài này.", "", "");
@@ -886,18 +1024,15 @@
             }
         }
 
-        // Xử lý khi người dùng chọn thư mục hoặc kéo thả nhiều file trên PC
         async function handleBatchFiles(fileList) {
             if (!fileList || fileList.length === 0) return;
             const files = Array.from(fileList);
 
-            // 1. Tìm file IPA.txt dùng chung
             const ipaFile = files.find(f => f.name.toLowerCase() === 'ipa.txt');
             if (ipaFile) {
                 parseIPAData(await ipaFile.text());
             }
 
-            // 2. Gom nhóm tất cả các file .mp3 và .srt theo tên gốc (baseName)
             const mp3Map = new Map();
             const srtMap = new Map();
 
@@ -914,7 +1049,6 @@
             const newTracks = [];
             for (const [baseKey, mp3File] of mp3Map.entries()) {
                 let srtFile = srtMap.get(baseKey);
-                // Fallback nếu thư mục chỉ có đúng 1 file mp3 và 1 file srt khác tên (VD: audio.mp3 & subtitle.srt)
                 if (!srtFile && mp3Map.size === 1 && srtMap.size === 1) {
                     srtFile = Array.from(srtMap.values())[0];
                 }
@@ -942,11 +1076,9 @@
             }
         }
 
-        // Tự động tìm các cặp file .mp3 và .srt cùng tên khi chạy trên GitHub Pages hoặc Web Server
         async function discoverServerTracks() {
             const discovered = [];
 
-            // Cách A: Nếu đang chạy trên GitHub Pages (*.github.io), tự động gọi GitHub API lấy danh sách file trong thư mục
             if (window.location.hostname.endsWith('github.io')) {
                 try {
                     const owner = window.location.hostname.split('.')[0];
@@ -986,12 +1118,12 @@
                 } catch (e) {}
             }
 
-            // Cách B: Nếu chưa tìm thấy qua API, kiểm tra các cặp file mặc định trên Server
             if (discovered.length === 0) {
                 const candidatePairs = [
                     { title: "Kinh Chánh Tinh Tấn", mp3: "audio.mp3", srt: "subtitle.srt" },
-                    { title: "Kinh CTT eng", mp3: "Kinh CTT eng.mp3", srt: "Kinh CTT eng.srt" },
-                    { title: "audio", mp3: "audio.mp3", srt: "audio.srt" }
+                    { title: "Kinh nhạc CHÁNH TINH TẤN eng", mp3: "Kinh nhạc CHÁNH TINH TẤN eng.mp3", srt: "Kinh nhạc CHÁNH TINH TẤN eng.srt" },
+                    { title: "SUTRA OF RIGHT MEDITATIVE ENDEAVOUR", mp3: "SUTRA_OF_RIGHT_MEDITATIVE_ENDEAVOUR_RightEcstasy.mp3", srt: "SUTRA_OF_RIGHT_MEDITATIVE_ENDEAVOUR_RightEcstasy.srt" },
+                    { title: "Kinh CTT eng", mp3: "Kinh CTT eng.mp3", srt: "Kinh CTT eng.srt" }
                 ];
                 for (const c of candidatePairs) {
                     try {
@@ -1005,7 +1137,6 @@
                                 srtUrl: c.srt,
                                 srtText: srtText
                             });
-                            break;
                         }
                     } catch (e) {}
                 }
@@ -1017,7 +1148,6 @@
         async function initApp() {
             loadSavedFontSizeSettings();
 
-            // Kiểm tra nếu đang chạy trên PC thì hiện nút & khung nạp file từ thư mục
             const onPC = isRunningOnPC();
             if (onPC) {
                 btnToggleLocal.style.display = 'inline-block';
@@ -1026,7 +1156,6 @@
                 }
             }
 
-            // Gắn sự kiện cho nút chọn thư mục và kéo thả
             const folderInput = document.getElementById('folderUpload');
             if (folderInput) {
                 folderInput.addEventListener('change', e => handleBatchFiles(e.target.files));
@@ -1042,13 +1171,11 @@
                 });
             }
 
-            // 1. Nạp file IPA.txt dùng chung
             try {
                 const ipaRes = await fetch('IPA.txt', { cache: 'no-cache' });
                 if (ipaRes.ok) parseIPAData(await ipaRes.text());
             } catch (e) {}
 
-            // 2. Tìm và nạp danh sách các cặp bài nghe MP3 + SRT trên Server
             const tracks = await discoverServerTracks();
             if (tracks.length > 0) {
                 availableTracks = tracks;
@@ -1086,7 +1213,7 @@
                             if (fullText.includes('|')) {
                                 const parts = fullText.split('|');
                                 engPart = parts[0].trim();
-                                vnPart = parts[1].trim();
+                                vnPart = parts.slice(1).join('|').trim();
                             }
                             parsedData.push({
                                 start: timeToSeconds(timeMatch[1]),
@@ -1317,28 +1444,51 @@
             if (isSentenceLoopMode) stopSentenceLoop();
         }
 
+        // --- XỬ LÝ CẬP NHẬT PHỤ ĐỀ KHI CHẠY NHẠC (ĐÃ FIX LỖI NHẢY VỀ CÂU ĐẦU KHI NGHỈ GIỮA CÂU) ---
         media.addEventListener('timeupdate', () => {
             const currentTime = media.currentTime;
             
             if (isSentenceLoopMode && selectedSentences.length > 0) {
                 let blocks = getAllContinuousBlocks();
-                let currentBlock = null; let currentBlockIdx = -1;
+                let currentBlock = null;
+                let currentBlockIdx = -1;
                 for (let i = 0; i < blocks.length; i++) {
                     let b = blocks[i];
                     if (currentTime >= b.start - 0.3 && currentTime <= b.end + 0.05) {
-                        currentBlock = b; currentBlockIdx = i; break;
+                        currentBlock = b;
+                        currentBlockIdx = i;
+                        break;
                     }
                 }
                 if (!currentBlock) {
                     let nextBlock = blocks.find(b => b.start > currentTime);
                     media.currentTime = nextBlock ? nextBlock.start : blocks[0].start;
-                    media.play(); return;
+                    media.play();
+                    return;
                 }
+
+                // Tìm câu đang phát, hoặc nếu đang ở khoảng nghỉ giữa 2 câu liên tiếp thì giữ câu vừa đọc xong
                 let foundIdx = -1;
                 for (let idx of currentBlock.indices) {
-                    if (currentTime >= sentences[idx].start && currentTime <= sentences[idx].end) { foundIdx = idx; break; }
+                    if (currentTime >= sentences[idx].start && currentTime <= sentences[idx].end) {
+                        foundIdx = idx;
+                        break;
+                    }
                 }
-                if (foundIdx === -1) foundIdx = currentBlock.indices[0];
+                if (foundIdx === -1) {
+                    // Nếu rơi vào khoảng nghỉ giữa các câu trong cùng 1 cụm liên tiếp,
+                    // tìm câu gần nhất trước đó trong cụm để giữ nguyên trên màn hình (không nhảy về câu đầu tiên)
+                    for (let k = currentBlock.indices.length - 1; k >= 0; k--) {
+                        let candidateIdx = currentBlock.indices[k];
+                        if (currentTime >= sentences[candidateIdx].start) {
+                            foundIdx = candidateIdx;
+                            break;
+                        }
+                    }
+                    if (foundIdx === -1) {
+                        foundIdx = currentBlock.indices[0];
+                    }
+                }
 
                 if (currentSentenceIndex !== foundIdx) {
                     currentSentenceIndex = foundIdx;
@@ -1367,7 +1517,10 @@
                     updateHighlight(foundIndex);
                 }
             } else {
-                if (!media.paused && !isSentenceLoopMode) { updateMainSubtitle("♪ ♪ ♪", "", ""); updateHighlight(-1); }
+                if (!media.paused && !isSentenceLoopMode) {
+                    updateMainSubtitle("♪ ♪ ♪", "", "");
+                    updateHighlight(-1);
+                }
             }
         });
 
@@ -1375,15 +1528,24 @@
             if (selectedSentences.length === 0) return [];
             let sortedSelected = [...selectedSentences].sort((a, b) => a - b);
             let blocks = [];
-            let currentBlock = { start: sentences[sortedSelected[0]].start, end: sentences[sortedSelected[0]].end, indices: [sortedSelected[0]] };
+            let currentBlock = {
+                start: sentences[sortedSelected[0]].start,
+                end: sentences[sortedSelected[0]].end,
+                indices: [sortedSelected[0]]
+            };
             for (let i = 1; i < sortedSelected.length; i++) {
-                let prevIdx = sortedSelected[i - 1]; let currIdx = sortedSelected[i];
+                let prevIdx = sortedSelected[i - 1];
+                let currIdx = sortedSelected[i];
                 if (currIdx === prevIdx + 1) {
                     currentBlock.end = sentences[currIdx].end;
                     currentBlock.indices.push(currIdx);
                 } else {
                     blocks.push(currentBlock);
-                    currentBlock = { start: sentences[currIdx].start, end: sentences[currIdx].end, indices: [currIdx] };
+                    currentBlock = {
+                        start: sentences[currIdx].start,
+                        end: sentences[currIdx].end,
+                        indices: [currIdx]
+                    };
                 }
             }
             blocks.push(currentBlock);
