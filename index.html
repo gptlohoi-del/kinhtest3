@@ -7,7 +7,6 @@
     <link rel="manifest" href="./manifest.json">
     <style>
         :root {
-            /* Biến CSS điều chỉnh kích cỡ chữ trong Setting */
             --main-eng-size: 1.3em;
             --main-ipa-size: 1.0em;
             --main-vn-size: 1.05em;
@@ -30,7 +29,6 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        /* Tự động thu phóng tỷ lệ chữ cơ sở theo độ rộng màn hình điện thoại */
         @media (max-width: 480px) {
             body {
                 font-size: 14px;
@@ -83,7 +81,7 @@
         }
         .btn-toggle-local:hover { background-color: #dde2e6; }
 
-        /* --- KHUNG CHỌN BÀI NGHE (CHỐNG TRÀN VIỀN KHI TÊN FILE DÀI) --- */
+        /* --- KHUNG CHỌN BÀI NGHE --- */
         .playlist-bar {
             display: flex;
             align-items: center;
@@ -122,7 +120,7 @@
             white-space: nowrap;
         }
 
-        /* --- TRÌNH PHÁT NHẠC & THANH TỐC ĐỘ / TẢI XUỐNG SỔ XUỐNG DƯỚI --- */
+        /* --- TRÌNH PHÁT NHẠC & THANH TỐC ĐỘ / TẢI XUỐNG --- */
         .player-wrapper {
             background: #f8f9fa;
             border: 1px solid #dee2e6;
@@ -591,32 +589,29 @@
             <button type="button" class="btn-toggle-local" id="btnToggleLocal" onclick="toggleLocalPanel()" title="Bật/tắt khung nạp thư mục trên PC">📂 Nạp Thư Mục PC</button>
         </div>
 
-        <!-- Khung nạp thư mục tự động bật khi phát hiện chạy trên PC -->
         <div class="local-fallback" id="localFallback" style="display:none;">
-            <b>💻 Chế độ chạy trên PC:</b> Chọn thư mục chứa các cặp file <code>.mp3</code>, <code>.srt</code> cùng tên và file <code>IPA.txt</code> dùng chung:
+            <b>💻 Chế độ chạy trên PC:</b> Chọn thư mục chứa các cặp file <code>.mp3</code>, <code>.srt</code> / <code>.txt</code> cùng tên và file <code>IPA.txt</code> dùng chung:
             <div class="local-folder-box" id="dropZone">
                 <label class="btn-folder-load">
-                    📂 Chọn Thư Mục Chứa Các File MP3 & SRT
+                    📂 Chọn Thư Mục Chứa Các File MP3 & SRT/TXT
                     <input type="file" id="folderUpload" webkitdirectory directory multiple style="display:none;">
                 </label>
                 <div style="font-size: 0.85em; color: #555;">
-                    Hoặc bôi đen và <b>kéo & thả</b> tất cả các file (<code>.mp3</code>, <code>.srt</code>, <code>IPA.txt</code>) vào khung này.
+                    Hoặc bôi đen và <b>kéo & thả</b> tất cả các file (<code>.mp3</code>, <code>.srt</code>, <code>.txt</code>) vào khung này.
                 </div>
                 <div class="local-status" id="localLoadStatus"></div>
             </div>
         </div>
 
-        <!-- Thanh chọn bài nghe (khi có nhiều cặp file MP3 và SRT cùng tên) -->
         <div class="playlist-bar">
             <label for="trackSelector">🎵 Bài:</label>
             <select id="trackSelector" class="playlist-select" onchange="handleTrackChange(this.value)">
-                <option value="">-- Đang tải danh sách bài... --</option>
+                <option value="">-- Đang quét danh sách bài... --</option>
             </select>
         </div>
 
-        <!-- Trình phát Audio kèm nút Tốc độ & Tải xuống sổ xuống dưới -->
         <div class="player-wrapper">
-            <audio id="myMedia" controls controlsList="nodownload" src="audio.mp3">
+            <audio id="myMedia" controls controlsList="nodownload">
                 Trình duyệt không hỗ trợ thẻ audio.
             </audio>
             <div class="custom-media-bar">
@@ -633,13 +628,12 @@
                         <div class="speed-option" onclick="setPlaybackSpeed(1.5)"><span>1.5x (Rất nhanh)</span></div>
                     </div>
                 </div>
-                <a id="btnDownloadMp3" href="audio.mp3" download="audio.mp3" class="btn-media-tool">
+                <a id="btnDownloadMp3" href="#" download class="btn-media-tool">
                     Tải MP3
                 </a>
             </div>
         </div>
 
-        <!-- Khung phụ đề chính khi chạy MP3 -->
         <div class="subtitle-display" id="currentSubtitle">
             <div class="subtitle-eng" id="mainSubEng">Đang tải dữ liệu...</div>
             <div class="subtitle-ipa" id="mainSubIpa"></div>
@@ -665,7 +659,6 @@
         </div>
     </div>
 
-    <!-- Nút Float Icon Hoa Sen (Luôn ghim góc phải dưới màn hình) -->
     <button class="fab-doc-btn" id="fabQuickSelect" onclick="openRangeModal()" title="Chọn câu & Cài đặt cỡ chữ">
         <span class="fab-badge" id="fabBadge">0</span>
         <svg viewBox="0 0 512 512">
@@ -677,7 +670,6 @@
         </svg>
     </button>
 
-    <!-- Hộp thoại 2 chức năng: Chọn số câu & Setting -->
     <div class="range-modal-overlay" id="rangeModalOverlay" onclick="handleOverlayClick(event)">
         <div class="range-modal">
             <div class="modal-mode-tabs">
@@ -689,7 +681,6 @@
                 </button>
             </div>
 
-            <!-- TAB 1: CHỌN SỐ CÂU -->
             <div id="modalSectionRange">
                 <h4>
                     <span>📄 Chọn nhanh câu theo số</span>
@@ -712,7 +703,6 @@
                 </div>
             </div>
 
-            <!-- TAB 2: SETTING (CHỈNH KÍCH CỠ CHỮ KÈM NÚT - VÀ +) -->
             <div id="modalSectionSetting" style="display: none;">
                 <div class="setting-group">
                     <div class="setting-group-title">📺 Khung phụ đề chính (Khi chạy MP3)</div>
@@ -799,13 +789,8 @@
         let abState = 0; let loopA = 0; let loopB = 0; let isABLoopMode = false;
         let selectedSentences = []; let isSentenceLoopMode = false;
 
-        // --- 1. PHÁT HIỆN PC HAY MOBILE ---
         function isRunningOnPC() {
             return false;
-            // const ua = navigator.userAgent || "";
-            // const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-            // const isIPadTouch = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-            // return (!isMobileUA && !isIPadTouch) || window.location.protocol === 'file:';
         }
 
         function toggleLocalPanel() {
@@ -813,7 +798,6 @@
             localFallback.style.display = (localFallback.style.display === 'none' || !localFallback.style.display) ? 'block' : 'none';
         }
 
-        // --- 2. MENU TỐC ĐỘ PHÁT SỔ XUỐNG DƯỚI ---
         function toggleSpeedMenu(e) {
             e.stopPropagation();
             document.getElementById('speedMenuList').classList.toggle('show');
@@ -833,11 +817,9 @@
             if (menu) menu.classList.remove('show');
         });
 
-        // --- 3. QUẢN LÝ SETTING CỠ CHỮ (TỰ ĐỘNG THEO MÀN HÌNH + NÚT +/-) ---
         function getDeviceDefaultFontSizes() {
             const w = window.innerWidth || 375;
             if (w <= 420) {
-                // Cỡ chữ tối ưu cho màn hình điện thoại nhỏ/vừa không bị tràn
                 return { mainEng: 1.15, mainIpa: 0.92, mainVn: 0.98, listEng: 0.95, listIpa: 0.85 };
             } else if (w <= 768) {
                 return { mainEng: 1.25, mainIpa: 1.00, mainVn: 1.05, listEng: 1.00, listIpa: 0.90 };
@@ -918,7 +900,6 @@
             }
         }
 
-        // --- 4. XỬ LÝ TỪ ĐIỂN IPA & HIỂN THỊ PHỤ ĐỀ (HỖ TRỢ CẢ SRT KHÔNG CÓ TIẾNG VIỆT) ---
         function convertSentenceToIPA(text) {
             if (!text) return "";
             return text.replace(/[a-zA-Z]+/g, (word) => {
@@ -953,7 +934,6 @@
                 mainSubIpa.innerText = "";
                 mainSubIpa.style.display = 'none';
             }
-            // Nếu file SRT không có phần tiếng Việt, ẩn dòng tiếng Việt để giao diện gọn đẹp
             if (vnText && vnText.trim().length > 0) {
                 mainSubVn.innerText = vnText.trim();
                 mainSubVn.style.display = 'block';
@@ -963,14 +943,21 @@
             }
         }
 
-        // --- 5. QUẢN LÝ NHIỀU CẶP FILE MP3 & SRT CÙNG TÊN ---
+        // --- HÀM CHUẨN HÓA TÊN FILE ĐỂ SO KHỚP MỌI CẶP FILE MP3 & SRT/TXT TRÙNG TÊN ---
         function getBaseName(filename) {
-            return filename.replace(/\.[^/.]+$/, "").trim();
+            return (filename || "").replace(/\.[^/.]+$/, "").trim();
+        }
+
+        function normalizeFileKey(filename) {
+            return getBaseName(filename)
+                .normalize('NFC')
+                .toLowerCase()
+                .replace(/\s+/g, ' ')
+                .trim();
         }
 
         function formatDisplayTitle(rawTitle) {
-            // Thay dấu gạch dưới liên tiếp bằng khoảng trắng để dễ đọc và không gây tràn viền
-            return (rawTitle || "").replace(/_/g, ' ');
+            return (rawTitle || "").normalize('NFC').replace(/_/g, ' ');
         }
 
         function renderTrackSelector() {
@@ -978,7 +965,7 @@
             if (availableTracks.length === 0) {
                 const opt = document.createElement('option');
                 opt.value = "";
-                opt.innerText = "-- Chưa có bài nghe nào --";
+                opt.innerText = "-- Không tìm thấy cặp file MP3 & SRT/TXT nào --";
                 trackSelector.appendChild(opt);
                 return;
             }
@@ -1006,7 +993,7 @@
             media.src = track.mp3Url;
             media.playbackRate = currentRate;
             btnDownloadMp3.href = track.mp3Url;
-            btnDownloadMp3.setAttribute('download', track.mp3Name || (track.title + '.mp3'));
+            btnDownloadMp3.setAttribute('download', track.mp3Name || (niceTitle + '.mp3'));
 
             if (track.srtText) {
                 processSRT(track.srtText);
@@ -1018,11 +1005,103 @@
                         track.srtText = await res.text();
                         processSRT(track.srtText);
                         updateMainSubtitle(`Đã chọn: ${niceTitle}<br>Bấm Play hoặc chọn câu bên dưới để nghe.`, "", "");
+                    } else {
+                        updateMainSubtitle(`Không tải được phụ đề (${res.status}).`, "", "");
                     }
                 } catch (e) {
-                    updateMainSubtitle("Không tải được file phụ đề SRT của bài này.", "", "");
+                    updateMainSubtitle("Không tải được file phụ đề của bài này.", "", "");
                 }
             }
+        }
+
+        // Quét từ danh sách file bất kỳ và ghép cặp tất cả các file .mp3 + (.srt hoặc .txt) trùng tên
+        function matchMp3AndSubPairs(fileNamesList) {
+            const mp3Files = [];
+            const subMap = new Map();
+
+            fileNamesList.forEach(name => {
+                if (!name) return;
+                const lower = name.toLowerCase();
+                // Bỏ qua file từ điển IPA.txt dùng chung
+                if (lower === 'ipa.txt') return;
+
+                const key = normalizeFileKey(name);
+                if (lower.endsWith('.mp3')) {
+                    mp3Files.push({ name, key });
+                } else if (lower.endsWith('.srt') || lower.endsWith('.txt')) {
+                    // Ưu tiên .srt nếu có cả .srt và .txt trùng tên
+                    if (!subMap.has(key) || lower.endsWith('.srt')) {
+                        subMap.set(key, name);
+                    }
+                }
+            });
+
+            const matched = [];
+            for (const m of mp3Files) {
+                let subName = subMap.get(m.key);
+                // Nếu trong thư mục chỉ có duy nhất 1 file mp3 và 1 file phụ đề khác tên
+                if (!subName && mp3Files.length === 1 && subMap.size === 1) {
+                    subName = Array.from(subMap.values())[0];
+                }
+                if (subName) {
+                    matched.push({
+                        title: getBaseName(m.name).normalize('NFC'),
+                        mp3Url: `./${encodeURIComponent(m.name)}`,
+                        mp3Name: m.name,
+                        srtUrl: `./${encodeURIComponent(subName)}`
+                    });
+                }
+            }
+
+            matched.sort((a, b) => a.title.localeCompare(b.title, 'vi'));
+            return matched;
+        }
+
+        // Quét tự động toàn bộ thư mục trên GitHub Pages hoặc Web Server (Không dùng danh sách tên file cố định)
+        async function discoverServerTracks() {
+            // 1. Nếu chạy trên GitHub Pages (*.github.io), dùng GitHub API quét toàn bộ file trong thư mục
+            if (window.location.hostname.endsWith('github.io')) {
+                try {
+                    const owner = window.location.hostname.split('.')[0];
+                    const pathParts = window.location.pathname.split('/').filter(Boolean);
+                    if (pathParts.length >= 1) {
+                        const repo = pathParts[0];
+                        const subDir = pathParts.slice(1).filter(p => !p.toLowerCase().endsWith('.html')).join('/');
+                        const apiUrl = subDir
+                            ? `https://api.github.com/repos/${owner}/${repo}/contents/${subDir}?t=${Date.now()}`
+                            : `https://api.github.com/repos/${owner}/${repo}/contents?t=${Date.now()}`;
+
+                        const res = await fetch(apiUrl, { cache: 'no-store' });
+                        if (res.ok) {
+                            const items = await res.json();
+                            if (Array.isArray(items)) {
+                                const allFileNames = items.map(i => i.name).filter(Boolean);
+                                const tracks = matchMp3AndSubPairs(allFileNames);
+                                if (tracks.length > 0) return tracks;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error("Lỗi khi quét GitHub API:", e);
+                }
+            }
+
+            // 2. Nếu chạy trên Local Server có bật Directory Listing, quét các thẻ link trong thư mục
+            try {
+                const res = await fetch('./', { cache: 'no-store' });
+                if (res.ok) {
+                    const html = await res.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const links = Array.from(doc.querySelectorAll('a'))
+                        .map(a => decodeURIComponent((a.getAttribute('href') || '').split('/').pop().split('?')[0]))
+                        .filter(Boolean);
+                    const tracks = matchMp3AndSubPairs(links);
+                    if (tracks.length > 0) return tracks;
+                }
+            } catch (e) {}
+
+            return [];
         }
 
         async function handleBatchFiles(fileList) {
@@ -1039,11 +1118,14 @@
 
             for (const f of files) {
                 const lower = f.name.toLowerCase();
-                const baseKey = getBaseName(f.name).toLowerCase();
+                if (lower === 'ipa.txt') continue;
+                const baseKey = normalizeFileKey(f.name);
                 if (lower.endsWith('.mp3')) {
                     mp3Map.set(baseKey, f);
-                } else if (lower.endsWith('.srt')) {
-                    srtMap.set(baseKey, f);
+                } else if (lower.endsWith('.srt') || lower.endsWith('.txt')) {
+                    if (!srtMap.has(baseKey) || lower.endsWith('.srt')) {
+                        srtMap.set(baseKey, f);
+                    }
                 }
             }
 
@@ -1056,7 +1138,7 @@
                 if (srtFile) {
                     const srtText = await srtFile.text();
                     newTracks.push({
-                        title: getBaseName(mp3File.name),
+                        title: getBaseName(mp3File.name).normalize('NFC'),
                         mp3Url: URL.createObjectURL(mp3File),
                         mp3Name: mp3File.name,
                         srtText: srtText
@@ -1071,96 +1153,32 @@
                 renderTrackSelector();
                 trackSelector.value = "0";
                 await handleTrackChange("0");
-                localLoadStatus.innerText = `✅ Đã tìm thấy ${newTracks.length} cặp bài nghe (.mp3 + .srt)${ipaFile ? ' và IPA.txt dùng chung' : ''}!`;
+                localLoadStatus.innerText = `✅ Đã tìm thấy ${newTracks.length} cặp bài nghe!`;
             } else {
-                localLoadStatus.innerText = `⚠️ Không tìm thấy cặp file .mp3 và .srt nào cùng tên trong thư mục đã chọn!`;
+                localLoadStatus.innerText = `⚠️ Không tìm thấy cặp file .mp3 và .srt/.txt nào cùng tên!`;
             }
         }
 
-        async function discoverServerTracks() {
-            const discovered = [];
-
-            // 1. Nếu chạy trên GitHub Pages, dùng GitHub API để quét tự động tất cả file
-            if (window.location.hostname.endsWith('github.io')) {
+        async function initApp() {
+            // Đăng ký Service Worker (sw.js) để chạy Offline và tự động cập nhật bản mới
+            if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
                 try {
-                    const owner = window.location.hostname.split('.')[0];
-                    const pathParts = window.location.pathname.split('/').filter(Boolean);
-                    if (pathParts.length >= 1) {
-                        const repo = pathParts[0];
-                        const subDir = pathParts.slice(1).filter(p => !p.endsWith('.html')).join('/');
-                        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${subDir}`;
-                        const res = await fetch(apiUrl);
-                        if (res.ok) {
-                            const items = await res.json();
-                            if (Array.isArray(items)) {
-                                const mp3Items = items.filter(i => i.name && i.name.toLowerCase().endsWith('.mp3'));
-                                const srtMap = new Map();
-                                items.filter(i => i.name && i.name.toLowerCase().endsWith('.srt')).forEach(i => {
-                                    srtMap.set(getBaseName(i.name).toLowerCase(), i.name);
-                                });
-
-                                for (const m of mp3Items) {
-                                    const base = getBaseName(m.name);
-                                    let srtName = srtMap.get(base.toLowerCase());
-                                    if (srtName) {
-                                        discovered.push({
-                                            title: base,
-                                            mp3Url: `./${encodeURIComponent(m.name)}`,
-                                            mp3Name: m.name,
-                                            srtUrl: `./${encodeURIComponent(srtName)}`
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch (e) {}
-            }
-
-            // 2. Nếu chạy local hoặc API không quét được, liệt kê tất cả các tên file bạn có trong thư mục
-            if (discovered.length === 0) {
-                const candidateFiles = [
-                    "Kinh nhạc CHÁNH TINH TẤN eng",
-                    "Kinh đọc CHÁNH TINH TẤN eng",
-                    "Kinh Chánh Tinh Tấn",
-                    "SUTRA OF RIGHT MEDITATIVE ENDEAVOUR_RightEcstasy",
-                    "Kinh CTT eng",
-                    "audio"
-                ];
-
-                for (const name of candidateFiles) {
-                    const mp3Name = name + ".mp3";
-                    const srtName = name + ".srt";
-                    try {
-                        // Kiểm tra xem file srt có tồn tại trên server hay không
-                        const srtRes = await fetch(srtName, { method: 'HEAD', cache: 'no-cache' });
-                        if (srtRes.ok) {
-                            const fullSrtRes = await fetch(srtName, { cache: 'no-cache' });
-                            const srtText = await fullSrtRes.text();
-                            discovered.push({
-                                title: name,
-                                mp3Url: mp3Name,
-                                mp3Name: mp3Name,
-                                srtUrl: srtName,
-                                srtText: srtText
-                            });
-                        }
-                    } catch (e) {}
+                    await navigator.serviceWorker.register('./sw.js');
+                } catch (e) {
+                    console.log('Lỗi đăng ký Offline:', e);
                 }
             }
 
-            return discovered;
-        }
-        async function initApp() {
+            loadSavedFontSizeSettings();
             loadSavedFontSizeSettings();
 
-            // const onPC = isRunningOnPC();
-            // if (onPC) {
-            //     btnToggleLocal.style.display = 'inline-block';
-            //     if (window.location.protocol === 'file:') {
-            //         localFallback.style.display = 'block';
-            //     }
-            // }
+            const onPC = isRunningOnPC();
+            if (onPC) {
+                btnToggleLocal.style.display = 'inline-block';
+                if (window.location.protocol === 'file:') {
+                    localFallback.style.display = 'block';
+                }
+            }
 
             const folderInput = document.getElementById('folderUpload');
             if (folderInput) {
@@ -1177,11 +1195,13 @@
                 });
             }
 
+            // 1. Nạp file IPA.txt dùng chung cho mọi bài
             try {
-                const ipaRes = await fetch('IPA.txt', { cache: 'no-cache' });
+                const ipaRes = await fetch('./IPA.txt', { cache: 'no-cache' });
                 if (ipaRes.ok) parseIPAData(await ipaRes.text());
             } catch (e) {}
 
+            // 2. Tự động quét tất cả các cặp file MP3 & SRT/TXT cùng tên trong thư mục
             const tracks = await discoverServerTracks();
             if (tracks.length > 0) {
                 availableTracks = tracks;
@@ -1190,12 +1210,7 @@
                 await handleTrackChange("0");
             } else {
                 renderTrackSelector();
-                if (onPC) {
-                    localFallback.style.display = 'block';
-                    updateMainSubtitle("Đang chạy trên PC: Hãy bấm nút 'Chọn Thư Mục Chứa Các File MP3 & SRT' ở trên.", "", "");
-                } else {
-                    updateMainSubtitle("Chưa tìm thấy dữ liệu bài nghe.", "", "");
-                }
+                updateMainSubtitle("Chưa tìm thấy cặp file .mp3 và .srt/.txt cùng tên trong thư mục.", "", "");
             }
         }
 
@@ -1450,7 +1465,6 @@
             if (isSentenceLoopMode) stopSentenceLoop();
         }
 
-        // --- XỬ LÝ CẬP NHẬT PHỤ ĐỀ KHI CHẠY NHẠC (ĐÃ FIX LỖI NHẢY VỀ CÂU ĐẦU KHI NGHỈ GIỮA CÂU) ---
         media.addEventListener('timeupdate', () => {
             const currentTime = media.currentTime;
             
@@ -1473,7 +1487,6 @@
                     return;
                 }
 
-                // Tìm câu đang phát, hoặc nếu đang ở khoảng nghỉ giữa 2 câu liên tiếp thì giữ câu vừa đọc xong
                 let foundIdx = -1;
                 for (let idx of currentBlock.indices) {
                     if (currentTime >= sentences[idx].start && currentTime <= sentences[idx].end) {
@@ -1482,8 +1495,6 @@
                     }
                 }
                 if (foundIdx === -1) {
-                    // Nếu rơi vào khoảng nghỉ giữa các câu trong cùng 1 cụm liên tiếp,
-                    // tìm câu gần nhất trước đó trong cụm để giữ nguyên trên màn hình (không nhảy về câu đầu tiên)
                     for (let k = currentBlock.indices.length - 1; k >= 0; k--) {
                         let candidateIdx = currentBlock.indices[k];
                         if (currentTime >= sentences[candidateIdx].start) {
