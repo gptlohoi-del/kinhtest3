@@ -25,7 +25,8 @@
             overflow-x: hidden;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #f4f6f9;
+            color: #1e293b;
             -webkit-text-size-adjust: 100%;
         }
 
@@ -36,10 +37,11 @@
         }
 
         .container {
-            background-color: white;
+            background-color: #ffffff;
             padding: 8px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+            border: 1px solid #e2e8f0;
             width: 100%;
             max-width: 100%;
             overflow-x: hidden;
@@ -56,7 +58,7 @@
         }
 
         #appTitle {
-            color: #2c3e50;
+            color: #1e293b;
             margin: 6px 0;
             font-size: clamp(1.05rem, 4.2vw, 1.4rem);
             line-height: 1.3;
@@ -67,36 +69,36 @@
         }
 
         .btn-toggle-local {
-            background-color: #e9ecef;
-            color: #333;
-            border: 1px solid #ced4da;
+            background-color: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
             padding: 6px 10px;
             font-size: 0.85em;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             min-width: unset !important;
             flex: none !important;
             display: none;
             white-space: nowrap;
         }
-        .btn-toggle-local:hover { background-color: #dde2e6; }
+        .btn-toggle-local:hover { background-color: #e2e8f0; }
 
         /* --- KHUNG CHỌN BÀI NGHE --- */
         .playlist-bar {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #eef6ff;
-            border: 1px solid #b8daff;
+            background: #f0f7ff;
+            border: 1px solid #bfdbfe;
             padding: 8px 10px;
-            border-radius: 6px;
+            border-radius: 8px;
             margin: 8px 0 12px 0;
             width: 100%;
             max-width: 100%;
         }
         .playlist-bar label {
             font-weight: bold;
-            color: #004085;
+            color: #1e40af;
             font-size: 0.95em;
             white-space: nowrap;
             flex-shrink: 0;
@@ -109,10 +111,10 @@
             padding: 7px 8px;
             font-size: 0.95em;
             font-weight: bold;
-            color: #2c3e50;
-            border: 1px solid #80bdff;
-            border-radius: 5px;
-            background-color: #fff;
+            color: #1e293b;
+            border: 1px solid #93c5fd;
+            border-radius: 6px;
+            background-color: #ffffff;
             outline: none;
             cursor: pointer;
             overflow: hidden;
@@ -122,8 +124,8 @@
 
         /* --- TRÌNH PHÁT NHẠC & THANH TỐC ĐỘ / TẢI XUỐNG --- */
         .player-wrapper {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 8px;
             margin-bottom: 12px;
@@ -149,12 +151,12 @@
             display: inline-block;
         }
         .btn-media-tool {
-            background-color: #fff !important;
-            color: #2c3e50 !important;
-            border: 1px solid #ced4da !important;
+            background-color: #ffffff !important;
+            color: #334155 !important;
+            border: 1px solid #cbd5e1 !important;
             padding: 6px 10px !important;
             font-size: 0.88em !important;
-            border-radius: 5px !important;
+            border-radius: 6px !important;
             cursor: pointer;
             min-width: unset !important;
             flex: none !important;
@@ -166,7 +168,7 @@
             white-space: nowrap;
         }
         .btn-media-tool:hover {
-            background-color: #e9ecef !important;
+            background-color: #f1f5f9 !important;
         }
         .speed-menu-list {
             display: none;
@@ -174,10 +176,10 @@
             top: calc(100% + 4px);
             left: 0;
             min-width: 145px;
-            background: #fff;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15);
             z-index: 9000;
             overflow: hidden;
         }
@@ -187,31 +189,33 @@
         .speed-option {
             padding: 8px 12px;
             font-size: 0.92em;
-            color: #333;
+            color: #334155;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #f1f1f1;
+            border-bottom: 1px solid #f1f5f9;
         }
         .speed-option:last-child { border-bottom: none; }
-        .speed-option:hover { background-color: #e3f2fd; }
+        .speed-option:hover { background-color: #eff6ff; }
         .speed-option.active {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #2563eb;
+            color: #ffffff;
             font-weight: bold;
         }
 
-        /* --- KHUNG HIỂN THỊ PHỤ ĐỀ CHÍNH --- */
+        /* --- KHUNG HIỂN THỊ PHỤ ĐỀ CHÍNH (DỊU MẮT, TƯƠNG PHẢN HÀI HÒA) --- */
         .subtitle-display {
             text-align: center;
             min-height: 4.5em;
             margin: 12px 0;
-            padding: 14px 10px;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            border-radius: 8px;
-            text-shadow: 1px 1px 2px black;
+            padding: 15px 12px;
+            background: linear-gradient(135deg, #1e293b 0%, #293548 100%);
+            color: #f8fafc;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 12px rgba(30, 41, 59, 0.12);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -225,12 +229,13 @@
             font-size: var(--main-eng-size);
             line-height: 1.35;
             font-weight: bold;
+            color: #f8fafc;
             width: 100%;
         }
         .subtitle-ipa {
             font-size: var(--main-ipa-size);
             line-height: 1.35;
-            color: #82e0aa;
+            color: #6ee7b7;
             font-family: "Lucida Sans Unicode", "Segoe UI", Arial, sans-serif;
             font-weight: normal;
             width: 100%;
@@ -238,51 +243,57 @@
         .subtitle-vn {
             font-size: var(--main-vn-size);
             line-height: 1.35;
-            color: #ecf0f1;
+            color: #fef08a;
             font-weight: normal;
             width: 100%;
         }
 
         .settings-panel {
-            background-color: #f8f9fa;
+            background-color: #f8fafc;
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 15px;
-            border: 1px solid #dee2e6;
+            border: 1px solid #e2e8f0;
             width: 100%;
         }
-        .settings-panel h3 { margin-top: 0; margin-bottom: 12px; color: #333; font-size: 1.05em; }
+        .settings-panel h3 { margin-top: 0; margin-bottom: 12px; color: #1e293b; font-size: 1.05em; }
         
         /* --- KHUNG DANH SÁCH CHỌN CÂU --- */
         .sentences-list {
             max-height: 450px;
             overflow-y: auto;
             overflow-x: hidden;
-            border: 1px solid #ccc;
+            border: 1px solid #cbd5e1;
             padding: 8px;
-            border-radius: 4px;
-            background: #fff;
+            border-radius: 6px;
+            background: #ffffff;
             width: 100%;
         }
         .sentence-item {
-            padding: 8px 4px;
+            padding: 8px 6px;
             cursor: pointer;
-            border-bottom: 1px solid #eee;
-            transition: background 0.2s;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s, border-color 0.2s;
             line-height: 1.45;
             display: flex;
             align-items: flex-start;
             width: 100%;
+            border-radius: 4px;
         }
-        .sentence-item:hover { background-color: #f0f0f0; }
+        .sentence-item:hover { background-color: #f8fafc; }
         
         .sentence-item.current {
-            border-left: 4px solid #007bff;
+            border-left: 4px solid #2563eb;
             font-weight: bold;
-            background-color: #e3f2fd;
+            background-color: #eff6ff;
         }
-        .sentence-item.selected { background-color: #fff3cd; }
-        .sentence-item.selected.current { background-color: #ffe8a1; }
+        .sentence-item.selected {
+            background-color: #fffbeb;
+        }
+        .sentence-item.selected.current {
+            border-left: 4px solid #d97706;
+            background-color: #fef3c7;
+        }
 
         .sentence-checkbox {
             margin-right: 6px;
@@ -290,10 +301,11 @@
             transform: scale(1.25);
             cursor: pointer;
             flex-shrink: 0;
+            accent-color: #2563eb;
         }
         .sentence-number {
             font-weight: bold;
-            color: #555;
+            color: #64748b;
             margin-right: 4px;
             min-width: 22px;
             font-size: var(--list-eng-size);
@@ -308,19 +320,21 @@
         }
         .sentence-eng-line {
             font-size: var(--list-eng-size);
+            color: #1e293b;
         }
         .sentence-ipa {
-            color: #0d6efd;
+            color: #0284c7;
             font-size: var(--list-ipa-size);
             font-family: "Lucida Sans Unicode", "Segoe UI", Arial, sans-serif;
             font-weight: normal;
             margin-top: 2px;
         }
         .time-badge {
-            color: #888;
+            color: #64748b;
             font-size: 0.82em;
             font-family: monospace;
-            background: #eee;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
             padding: 2px 6px;
             border-radius: 4px;
             margin-top: 4px;
@@ -330,36 +344,37 @@
         
         /* --- KHUNG UPLOAD THƯ MỤC DÀNH CHO PC --- */
         .local-fallback {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
             padding: 12px;
             margin-bottom: 12px;
             font-size: 0.92em;
-            border-radius: 4px;
+            border-radius: 6px;
             display: none;
             width: 100%;
+            color: #78350f;
         }
         .local-folder-box {
-            background: #fff;
-            border: 2px dashed #007bff;
+            background: #ffffff;
+            border: 2px dashed #3b82f6;
             padding: 10px;
             border-radius: 6px;
             margin-top: 8px;
             text-align: center;
         }
         .btn-folder-load {
-            background-color: #28a745 !important;
+            background-color: #059669 !important;
             color: white;
             padding: 9px 14px;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             display: inline-block;
             font-weight: bold;
             margin-bottom: 6px;
             max-width: 100%;
         }
-        .btn-folder-load:hover { background-color: #218838 !important; }
-        .local-status { font-size: 0.9em; color: #155724; margin-top: 6px; font-weight: bold; word-break: break-word; }
+        .btn-folder-load:hover { background-color: #047857 !important; }
+        .local-status { font-size: 0.9em; color: #065f46; margin-top: 6px; font-weight: bold; word-break: break-word; }
 
         .controls {
             display: flex;
@@ -370,10 +385,10 @@
         }
         button {
             padding: 11px 14px;
-            background-color: #007bff;
+            background-color: #2563eb;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             font-size: 0.98em;
@@ -381,10 +396,10 @@
             flex: 1 1 140px;
             max-width: 100%;
         }
-        button:hover { background-color: #0056b3; }
-        button.active { background-color: #dc3545 !important; }
-        .btn-secondary { background-color: #6c757d; flex: 0 1 auto; }
-        .btn-secondary:hover { background-color: #5a6268; }
+        button:hover { background-color: #1d4ed8; }
+        button.active { background-color: #e11d48 !important; }
+        .btn-secondary { background-color: #64748b; flex: 0 1 auto; }
+        .btn-secondary:hover { background-color: #475569; }
 
         /* --- NÚT FLOAT ICON HOA SEN CỐ ĐỊNH GÓC PHẢI DƯỚI MÀN HÌNH --- */
         .fab-doc-btn {
@@ -398,10 +413,10 @@
             flex: none !important;
             padding: 0 !important;
             border-radius: 50% !important;
-            background-color: #007bff;
+            background-color: #2563eb;
             color: #fff;
-            border: 2px solid #fff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -416,7 +431,7 @@
             position: absolute;
             top: -4px;
             left: -4px;
-            background-color: #dc3545;
+            background-color: #e11d48;
             color: white;
             font-size: 11px;
             font-weight: bold;
@@ -427,14 +442,14 @@
             display: none;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
         }
 
         /* --- MODAL ĐA NĂNG: CHỌN SỐ CÂU & SETTING --- */
         .range-modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(15, 23, 42, 0.55);
             z-index: 100000;
             display: none;
             align-items: flex-start;
@@ -443,19 +458,19 @@
             overflow-y: auto;
         }
         .range-modal {
-            background: #fff;
+            background: #ffffff;
             width: 100%;
             max-width: 420px;
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 14px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
             margin-top: 8px;
         }
         .modal-mode-tabs {
             display: flex;
             gap: 6px;
             margin-bottom: 12px;
-            border-bottom: 2px solid #dee2e6;
+            border-bottom: 2px solid #e2e8f0;
             padding-bottom: 8px;
         }
         .modal-tab-btn {
@@ -464,32 +479,33 @@
             padding: 9px 6px !important;
             font-size: 0.95em !important;
             border-radius: 6px !important;
-            background-color: #f1f3f5 !important;
-            color: #495057 !important;
-            border: 1px solid #ced4da !important;
+            background-color: #f1f5f9 !important;
+            color: #475569 !important;
+            border: 1px solid #cbd5e1 !important;
         }
         .modal-tab-btn.active-tab {
-            background-color: #007bff !important;
-            color: #fff !important;
-            border-color: #007bff !important;
+            background-color: #2563eb !important;
+            color: #ffffff !important;
+            border-color: #2563eb !important;
         }
 
         .range-modal h4 {
             margin: 0 0 8px 0;
-            color: #2c3e50;
+            color: #1e293b;
             font-size: 1.02em;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
         }
-        .range-modal p { margin: 0 0 10px 0; font-size: 0.88em; color: #555; line-height: 1.4; }
+        .range-modal p { margin: 0 0 10px 0; font-size: 0.88em; color: #475569; line-height: 1.4; }
         .range-input-box {
             width: 100%;
             padding: 10px;
             font-size: 1.2em;
             font-weight: bold;
-            border: 2px solid #007bff;
+            color: #1e293b;
+            border: 2px solid #3b82f6;
             border-radius: 6px;
             outline: none;
             text-align: center;
@@ -502,30 +518,30 @@
             min-width: unset !important;
             padding: 8px 4px !important;
             font-size: 0.9em !important;
-            background-color: #e9ecef !important;
-            color: #2c3e50 !important;
-            border: 1px solid #ced4da !important;
-            border-radius: 5px !important;
+            background-color: #f1f5f9 !important;
+            color: #1e293b !important;
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 6px !important;
         }
         .range-modal-actions { display: flex; gap: 8px; margin-top: 10px; }
         .range-modal-actions button { min-width: unset !important; padding: 10px 8px !important; font-size: 0.92em !important; flex: 1; }
-        .btn-apply-loop { background-color: #28a745 !important; }
-        .btn-close-modal { background-color: #6c757d !important; flex: 0.6 !important; }
+        .btn-apply-loop { background-color: #059669 !important; }
+        .btn-close-modal { background-color: #64748b !important; flex: 0.6 !important; }
 
         /* --- GIAO DIỆN CHỈNH CỠ CHỮ TRONG SETTING KÈM NÚT - / + --- */
         .setting-group {
-            background: #f8f9fa;
-            border: 1px solid #e2e6ea;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 10px;
             margin-bottom: 10px;
         }
         .setting-group-title {
             font-weight: bold;
-            color: #2c3e50;
+            color: #1e293b;
             font-size: 0.92em;
             margin-bottom: 8px;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid #e2e8f0;
             padding-bottom: 4px;
         }
         .setting-row {
@@ -538,7 +554,7 @@
         .setting-row:last-child { margin-bottom: 0; }
         .setting-label {
             font-size: 0.86em;
-            color: #333;
+            color: #334155;
             flex: 1;
             min-width: 75px;
         }
@@ -556,27 +572,28 @@
             font-size: 1.15em !important;
             line-height: 1 !important;
             border-radius: 5px !important;
-            background-color: #e9ecef !important;
-            color: #2c3e50 !important;
-            border: 1px solid #ced4da !important;
+            background-color: #f1f5f9 !important;
+            color: #1e293b !important;
+            border: 1px solid #cbd5e1 !important;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             touch-action: manipulation;
         }
         .btn-step-font:active {
-            background-color: #007bff !important;
-            color: #fff !important;
+            background-color: #2563eb !important;
+            color: #ffffff !important;
         }
         .setting-slider {
             width: 85px;
             cursor: pointer;
             margin: 0;
+            accent-color: #2563eb;
         }
         .setting-val {
             font-size: 0.82em;
             font-weight: bold;
-            color: #007bff;
+            color: #2563eb;
             min-width: 40px;
             text-align: right;
         }
@@ -649,7 +666,7 @@
 
         <div class="settings-panel">
             <h3>📑 2. Lặp Danh Sách Câu </h3>
-            <p style="margin-top:0; color:#555; font-size:0.92em;">Tích chọn một hoặc nhiều câu bên dưới. Hệ thống sẽ liên tục lặp lại các câu bạn đã chọn.</p>
+            <p style="margin-top:0; color:#475569; font-size:0.92em;">Tích chọn một hoặc nhiều câu bên dưới. Hệ thống sẽ liên tục lặp lại các câu bạn đã chọn.</p>
             <div class="controls">
                 <button id="btnToggleLoop" onclick="toggleSentenceLoop()">🔄 Bắt đầu lặp</button>
                 <button class="btn-secondary" onclick="clearSelection()">Xóa tất cả</button>
@@ -684,7 +701,7 @@
             <div id="modalSectionRange">
                 <h4>
                     <span>📄 Chọn nhanh câu theo số</span>
-                    <span id="totalSentenceHint" style="font-size: 0.85em; color: #007bff;"></span>
+                    <span id="totalSentenceHint" style="font-size: 0.85em; color: #2563eb;"></span>
                 </h4>
                 <p>Nhập câu hoặc khoảng câu (VD: <b>5-10,13,15,20-25</b> hoặc <b>*</b>).</p>
                 <input type="tel" inputmode="tel" id="rangeInput" class="range-input-box" placeholder="VD: 5-10,13 hoặc *" autocomplete="off">
@@ -1186,11 +1203,11 @@
             }
             const dropZone = document.getElementById('dropZone');
             if (dropZone) {
-                dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.backgroundColor = '#e3f2fd'; });
-                dropZone.addEventListener('dragleave', e => { e.preventDefault(); dropZone.style.backgroundColor = '#fff'; });
+                dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.backgroundColor = '#eff6ff'; });
+                dropZone.addEventListener('dragleave', e => { e.preventDefault(); dropZone.style.backgroundColor = '#ffffff'; });
                 dropZone.addEventListener('drop', e => {
                     e.preventDefault();
-                    dropZone.style.backgroundColor = '#fff';
+                    dropZone.style.backgroundColor = '#ffffff';
                     handleBatchFiles(e.dataTransfer.files);
                 });
             }
@@ -1588,13 +1605,13 @@
             if (abState === 0) {
                 loopA = media.currentTime; abState = 1;
                 btn.innerText = `[ A-B ] (${formatTime(loopA)}) - Bấm lấy B`;
-                btn.style.backgroundColor = "#ffc107"; btn.style.color = "#000";
+                btn.style.backgroundColor = "#f59e0b"; btn.style.color = "#ffffff";
             } else if (abState === 1) {
                 loopB = media.currentTime;
                 if (loopB > loopA) {
                     abState = 2; isABLoopMode = true;
                     btn.innerText = `[ A-B ] Lặp: ${formatTime(loopA)} ⟷ ${formatTime(loopB)} (Tắt)`;
-                    btn.style.backgroundColor = "#28a745"; btn.style.color = "#fff";
+                    btn.style.backgroundColor = "#059669"; btn.style.color = "#ffffff";
                     if (isSentenceLoopMode) stopSentenceLoop();
                 } else { alert("Mốc B phải sau mốc A!"); resetAB(); }
             } else { resetAB(); }
@@ -1604,7 +1621,7 @@
             abState = 0; isABLoopMode = false;
             const btn = document.getElementById('btnAB');
             btn.innerText = "[ A-B ] Bấm vào đây để đặt mốc A";
-            btn.style.backgroundColor = "#007bff"; btn.style.color = "#fff";
+            btn.style.backgroundColor = "#2563eb"; btn.style.color = "#ffffff";
         }
     </script>
 </body>
