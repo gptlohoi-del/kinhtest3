@@ -1080,6 +1080,7 @@
         async function discoverServerTracks() {
             const discovered = [];
 
+            // 1. Nếu chạy trên GitHub Pages, dùng GitHub API để quét tự động tất cả file
             if (window.location.hostname.endsWith('github.io')) {
                 try {
                     const owner = window.location.hostname.split('.')[0];
@@ -1101,9 +1102,6 @@
                                 for (const m of mp3Items) {
                                     const base = getBaseName(m.name);
                                     let srtName = srtMap.get(base.toLowerCase());
-                                    if (!srtName && mp3Items.length === 1 && srtMap.size === 1) {
-                                        srtName = Array.from(srtMap.values())[0];
-                                    }
                                     if (srtName) {
                                         discovered.push({
                                             title: base,
@@ -1119,23 +1117,31 @@
                 } catch (e) {}
             }
 
+            // 2. Nếu chạy local hoặc API không quét được, liệt kê tất cả các tên file bạn có trong thư mục
             if (discovered.length === 0) {
-                const candidatePairs = [
-                    { title: "Kinh Chánh Tinh Tấn", mp3: "audio.mp3", srt: "subtitle.srt" },
-                    { title: "Kinh nhạc CHÁNH TINH TẤN eng", mp3: "Kinh nhạc CHÁNH TINH TẤN eng.mp3", srt: "Kinh nhạc CHÁNH TINH TẤN eng.srt" },
-                    { title: "SUTRA OF RIGHT MEDITATIVE ENDEAVOUR", mp3: "SUTRA_OF_RIGHT_MEDITATIVE_ENDEAVOUR_RightEcstasy.mp3", srt: "SUTRA_OF_RIGHT_MEDITATIVE_ENDEAVOUR_RightEcstasy.srt" },
-                    { title: "Kinh CTT eng", mp3: "Kinh CTT eng.mp3", srt: "Kinh CTT eng.srt" }
+                const candidateFiles = [
+                    "Kinh nhạc CHÁNH TINH TẤN eng",
+                    "Kinh đọc CHÁNH TINH TẤN eng",
+                    "Kinh Chánh Tinh Tấn",
+                    "SUTRA OF RIGHT MEDITATIVE ENDEAVOUR_RightEcstasy",
+                    "Kinh CTT eng",
+                    "audio"
                 ];
-                for (const c of candidatePairs) {
+
+                for (const name of candidateFiles) {
+                    const mp3Name = name + ".mp3";
+                    const srtName = name + ".srt";
                     try {
-                        const srtRes = await fetch(c.srt, { cache: 'no-cache' });
+                        // Kiểm tra xem file srt có tồn tại trên server hay không
+                        const srtRes = await fetch(srtName, { method: 'HEAD', cache: 'no-cache' });
                         if (srtRes.ok) {
-                            const srtText = await srtRes.text();
+                            const fullSrtRes = await fetch(srtName, { cache: 'no-cache' });
+                            const srtText = await fullSrtRes.text();
                             discovered.push({
-                                title: c.title,
-                                mp3Url: c.mp3,
-                                mp3Name: c.mp3,
-                                srtUrl: c.srt,
+                                title: name,
+                                mp3Url: mp3Name,
+                                mp3Name: mp3Name,
+                                srtUrl: srtName,
                                 srtText: srtText
                             });
                         }
@@ -1145,7 +1151,6 @@
 
             return discovered;
         }
-
         async function initApp() {
             loadSavedFontSizeSettings();
 
